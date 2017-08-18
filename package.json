@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sorlinV/aimbot-web/issues"
   },
-  "homepage": "https://github.com/sorlinV/aimbot-web#readme"
+  "homepage": "https://github.com/sorlinV/aimbot-web#readme",
+  "dependencies": {
+    "johnny-five": "^0.11.3"
+  }
 }
