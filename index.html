@@ -6,17 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mbot-Web</title>
+    <style>
+        button {
+            height: 50px;
+            width: 50px;
+        }
+        
+        #but1 {
+            position: absolute;
+            top: 20%;
+            left: 45%;
+        }
+        
+        #but2 {
+            position: absolute;
+            top: 45%;
+            left: 80%;
+        }
+        
+        #but3 {
+            position: absolute;
+            top: 70%;
+            left: 45%;
+        }
+        
+        #but4 {
+            position: absolute;
+            top: 45%;
+            left: 10%;
+        }
+        
+        #but5 {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+        }
+        
+        #but6 {
+            position: absolute;
+            top: 50%;
+            left: 45%;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Commands</h1>
-    <pre>Z : Move forward</pre>
-    <pre>Q : Move left</pre>
-    <pre>S : Move back</pre>
-    <pre>D : Move right</pre>
-    <pre>🡹 : Speed up</pre>
-    <pre>🡻 : Slow down</pre>
+    <div id="div"></div>
+    <script>
+        let isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        };
+        if (!isMobile.any()) {
+            document.querySelector("#div").innerHTML += '<h1>Commands</h1><pre>Z : Move forward</pre><pre>Q : Move left</pre><pre>S : Move back</pre><pre>D : Move right</pre><pre>Space : Stop</pre><pre>P : Horn</pre>';
+        } else {
+            document.querySelector("#div").innerHTML += '<button id="but1">🡹</button><button id="but2">🡺</button><button id="but3">🡻</button><button id="but4">🡸</button><button id="but5">◼</button><button id="but6">♪</button>';
+        }
+    </script>
     <script src="client/client.js"></script>
 </body>
+
+
 
 </html>
