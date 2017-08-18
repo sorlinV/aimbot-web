@@ -49,6 +49,22 @@ http.createServer(function(req, res) {
         r_motor.stop();
         console.log('stop');
         res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/song") {
+        console.log("song");
+        var piezo = new five.Piezo(8);
+        let song = [];
+        fs.readFile('song.json', 'utf-8', function(error, data) {
+            data = JSON.parse(data);
+            for (let i = 0; i < data.notes.length; i++) {
+                let array = [];
+                array.push(data.notes[i], data.durations[i]);
+                song.push(array);
+            }
+            piezo.play({
+                song: song,
+                tempo: 62.5
+            });
+        });
     } else {
         res.write(req.url + ' 404 NOT FOUND');
         res.end(); //end the response
