@@ -1,0 +1,19 @@
+{
+  "name": "aimbot-web",
+  "version": "1.0.0",
+  "description": "create a web page that request a server nodejs and controlle mBot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sorlinV/aimbot-web.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sorlinV/aimbot-web/issues"
+  },
+  "homepage": "https://github.com/sorlinV/aimbot-web#readme"
+}
