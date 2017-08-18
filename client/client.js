@@ -1,23 +1,22 @@
-document.body.addEventListener("keydown", function(event) {
+document.body.addEventListener("keyress", function(event) {
     if (event.key === "z") {
-        doFetch("http://192.168.1.130/forward");
+        doFetch("http://192.168.1.130:8080/forward");
     }
     if (event.key === "q") {
-        doFetch("http://192.168.1.130/left");
+        doFetch("http://192.168.1.130:8080/left");
     }
     if (event.key == "s") {
-        doFetch("http://192.168.1.130/back");
+        doFetch("http://192.168.1.130:8080/back");
     }
     if (event.key == "d") {
-        doFetch("http://192.168.1.130/right");
+        doFetch("http://192.168.1.130:8080/right");
     }
     if (event.keyCode == 38) {
-        doFetch("http://192.168.1.130/speed");
+        doFetch("http://192.168.1.130:8080/speed");
     }
     if (event.keyCode == 40) {
-        doFetch("http://192.168.1.130/slow");
+        doFetch("http://192.168.1.130:8080/slow");
     }
-
 });
 
 function doFetch(url) {
