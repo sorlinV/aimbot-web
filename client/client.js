@@ -1,4 +1,4 @@
-document.body.addEventListener("keyress", function(event) {
+document.body.addEventListener("keydown", function(event) {
     if (event.key === "z") {
         doFetch("http://192.168.1.130:8080/forward");
     }
