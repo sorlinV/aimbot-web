@@ -46,38 +46,38 @@ if (!isMobile.any()) {
     // MOBILE VERSION
 
     // move forward request
-    document.querySelector("#but1").addEventListener("mouseover", function() {
+    document.querySelector("#but1").addEventListener("touchstart", function() {
         doFetch("http://192.168.1.130:8080/forward");
     });
-    document.querySelector("#but1").addEventListener("mouseout", function()  {
+    document.querySelector("#but1").addEventListener("touchend", function()  {
         console.log('avant');
         doFetch("http://192.168.1.130:8080/stop");
     });
 
 
     // move right request
-    document.querySelector("#but2").addEventListener("mouseover", function() {
+    document.querySelector("#but2").addEventListener("touchstart", function() {
         doFetch("http://192.168.1.130:8080/right");
     });
-    document.querySelector("#but2").addEventListener("mouseout", function()  {
+    document.querySelector("#but2").addEventListener("touchend", function()  {
         doFetch("http://192.168.1.130:8080/stop");
     });
 
 
     // move back request
-    document.querySelector("#but3").addEventListener("mouseover", function() {
+    document.querySelector("#but3").addEventListener("touchstart", function() {
         doFetch("http://192.168.1.130:8080/back");
     });
-    document.querySelector("#but3").addEventListener("mouseout", function()  {
+    document.querySelector("#but3").addEventListener("touchend", function()  {
         doFetch("http://192.168.1.130:8080/stop");
     });
 
 
     // move left request
-    document.querySelector("#but4").addEventListener("mouseover", function() {
+    document.querySelector("#but4").addEventListener("touchstart", function() {
         doFetch("http://192.168.1.130:8080/left");
     });
-    document.querySelector("#but4").addEventListener("mouseout", function()  {
+    document.querySelector("#but4").addEventListener("touchend", function()  {
         doFetch("http://192.168.1.130:8080/stop");
     });
 
