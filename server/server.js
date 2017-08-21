@@ -92,7 +92,9 @@ http.createServer(function(req, res) {
         res.end(); //end the response
     } else if (req.url.split('?')[0] === "/song") {
         bot.horn();
-        console.log("song");
+        res.end(); //end the response
+        // } else if (req.url.split === "/") {
+
     } else {
         res.write(req.url + ' 404 NOT FOUND');
         res.end(); //end the response
