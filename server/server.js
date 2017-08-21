@@ -3,54 +3,38 @@ let url = require('url');
 let fs = require("fs");
 var five = require("johnny-five");
 
-let board = new five.Board({ port: '/dev/ttyUSB0' });
-
-var max_speed_l = 150;
-var max_speed_r = 140;
-
-let l_motor = null;
-let r_motor = null;
-
-board.on("ready", function(err) {
-    if (err) {
-        console.log(err);
-        return;
+class bot {
+    constructor(max_speed_l, max_speed_r) {
+        this.max_speed_l, this.max_speed_l;
+        this.max_speed_r, this.max_speed_r;
     }
-    l_motor = new five.Motor({ pins: { pwm: 6, dir: 7 } });
-    r_motor = new five.Motor({ pins: { pwm: 5, dir: 4 } });
-});
-let speed = 0;
 
-http.createServer(function(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    if (req.url.split('?')[0] === "/forward") {
-        //res.write(JSON.stringify(out));
-        l_motor.reverse(max_speed_l);
-        r_motor.forward(max_speed_r);
-        console.log('forward');
-        res.end(); //end the response
-    } else if (req.url.split('?')[0] === "/back") {
-        r_motor.reverse(max_speed_r);
-        l_motor.forward(max_speed_l);
-        console.log('back');
-        res.end(); //end the response
-    } else if (req.url.split('?')[0] === "/left") {
-        l_motor.forward(max_speed_l);
-        r_motor.forward(max_speed_r);
-        console.log('left');
-        res.end(); //end the response
-    } else if (req.url.split('?')[0] === "/right") {
-        r_motor.reverse(max_speed_r);
-        l_motor.reverse(max_speed_l);
-        console.log('right');
-        res.end(); //end the response
-    } else if (req.url.split('?')[0] === "/stop") {
-        l_motor.stop();
-        r_motor.stop();
-        console.log('stop');
-        res.end(); //end the response
-    } else if (req.url.split('?')[0] === "/song") {
-        console.log("song");
+    forward() {
+        this.l_motor.reverse(this.max_speed_l);
+        this.r_motor.forward(this.max_speed_r);
+    }
+
+    back() {
+        this.l_motor.forward(this.max_speed_l);
+        this.r_motor.reverse(this.max_speed_r);
+    }
+
+    left() {
+        this.l_motor.forward(this.max_speed_l);
+        this.r_motor.forward(this.max_speed_r);
+    }
+
+    right() {
+        this.r_motor.reverse(this.max_speed_r);
+        this.l_motor.reverse(this.max_speed_l);
+    }
+
+    stop() {
+        this.l_motor.stop();
+        this.r_motor.stop();
+    }
+
+    horn() {
         var piezo = new five.Piezo(8);
         let song = [];
         fs.readFile('song.json', 'utf-8', function(error, data) {
@@ -65,6 +49,50 @@ http.createServer(function(req, res) {
                 tempo: 62.5
             });
         });
+    }
+}
+
+let board = new five.Board({ port: '/dev/ttyUSB0' });
+
+var max_speed_l = 150;
+var max_speed_r = 140;
+
+let l_motor = null;
+let r_motor = null;
+
+bot = new bot(max_speed_l, max_speed_r);
+
+board.on("ready", function(err) {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    bot.l_motor = new five.Motor({ pins: { pwm: 6, dir: 7 } });
+    bot.r_motor = new five.Motor({ pins: { pwm: 5, dir: 4 } });
+});
+let speed = 0;
+
+
+http.createServer(function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if (req.url.split('?')[0] === "/forward") {
+        bot.forward();
+        res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/back") {
+        bot.back();
+        res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/left") {
+        bot.left();
+        res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/right") {
+        bot.right();
+        res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/stop") {
+        bot.stop();
+        res.end(); //end the response
+    } else if (req.url.split('?')[0] === "/song") {
+        bot.horn();
+        console.log("song");
     } else {
         res.write(req.url + ' 404 NOT FOUND');
         res.end(); //end the response
