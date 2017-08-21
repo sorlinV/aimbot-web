@@ -1,40 +1,91 @@
 if (!isMobile.any()) {
     document.body.addEventListener("keydown", function(event) {
+        // move front
         if (event.key === "z") {
             doFetch("http://192.168.1.130:8080/forward");
         }
-        if (event.key === "q") {
-            doFetch("http://192.168.1.130:8080/left");
-        }
-        if (event.key == "s") {
-            doFetch("http://192.168.1.130:8080/back");
-        }
+        // move right
         if (event.key == "d") {
             doFetch("http://192.168.1.130:8080/right");
         }
-        if (event.keyCode == 32) {
-            doFetch("http://192.168.1.130:8080/stop");
+        // move back
+        if (event.key == "s") {
+            doFetch("http://192.168.1.130:8080/back");
         }
+        // move left
+        if (event.key === "q") {
+            doFetch("http://192.168.1.130:8080/left");
+        }
+
+        // if (event.keyCode == 32) {
+        //     doFetch("http://192.168.1.130:8080/stop");
+        // }
+
+        // play horn
         if (event.key == "p") {
             doFetch("http://192.168.1.130:8080/song");
         }
     });
+
+    // stop request
+    document.body.addEventListener("keyup", function(event) {
+        if (event.key === "z") {
+            doFetch("http://192.168.1.130:8080/stop");
+        }
+        if (event.key === "q") {
+            doFetch("http://192.168.1.130:8080/stop");
+        }
+        if (event.key == "s") {
+            doFetch("http://192.168.1.130:8080/stop");
+        }
+        if (event.key == "d") {
+            doFetch("http://192.168.1.130:8080/stop");
+        }
+    });
 } else {
-    document.querySelector("#but1").addEventListener("click", function() {
+    // MOBILE VERSION
+
+    // move forward request
+    document.querySelector("#but1").addEventListener("mouseover", function() {
         doFetch("http://192.168.1.130:8080/forward");
     });
-    document.querySelector("#but2").addEventListener("click", function() {
-        doFetch("http://192.168.1.130:8080/right");
-    });
-    document.querySelector("#but3").addEventListener("click", function() {
-        doFetch("http://192.168.1.130:8080/back");
-    });
-    document.querySelector("#but4").addEventListener("click", function() {
-        doFetch("http://192.168.1.130:8080/left");
-    });
-    document.querySelector("#but5").addEventListener("click", function() {
+    document.querySelector("#but1").addEventListener("mouseout", function()  {
+        console.log('avant');
         doFetch("http://192.168.1.130:8080/stop");
     });
+
+
+    // move right request
+    document.querySelector("#but2").addEventListener("mouseover", function() {
+        doFetch("http://192.168.1.130:8080/right");
+    });
+    document.querySelector("#but2").addEventListener("mouseout", function()  {
+        doFetch("http://192.168.1.130:8080/stop");
+    });
+
+
+    // move back request
+    document.querySelector("#but3").addEventListener("mouseover", function() {
+        doFetch("http://192.168.1.130:8080/back");
+    });
+    document.querySelector("#but3").addEventListener("mouseout", function()  {
+        doFetch("http://192.168.1.130:8080/stop");
+    });
+
+
+    // move left request
+    document.querySelector("#but4").addEventListener("mouseover", function() {
+        doFetch("http://192.168.1.130:8080/left");
+    });
+    document.querySelector("#but4").addEventListener("mouseout", function()  {
+        doFetch("http://192.168.1.130:8080/stop");
+    });
+
+    // document.querySelector("#but5").addEventListener("click", function() {
+    //     doFetch("http://192.168.1.130:8080/stop");
+    // });
+
+    // play horn request
     document.querySelector("#but6").addEventListener("click", function() {
         doFetch("http://192.168.1.130:8080/song");
     });
