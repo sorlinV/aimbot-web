@@ -54,8 +54,8 @@ class bot {
 
 let board = new five.Board({ port: '/dev/ttyUSB0' });
 
-var max_speed_l = 150;
-var max_speed_r = 140;
+var max_speed_l = 300;
+var max_speed_r = 300;
 
 let l_motor = null;
 let r_motor = null;
@@ -93,8 +93,18 @@ http.createServer(function(req, res) {
     } else if (req.url.split('?')[0] === "/song") {
         bot.horn();
         res.end(); //end the response
-        // } else if (req.url.split === "/") {
-
+    } else if (req.url === "/") {
+        fs.readFile(__dirname + '/../index.html', (err, data) => {
+            if (err) throw err;
+            res.write(data);
+            res.end();
+        });
+    } else if (req.url === "/client/client.js") {
+        fs.readFile(__dirname + '/../client/client.js', (err, data) => {
+            if (err) throw err;
+            res.write(data);
+            res.end();
+        });
     } else {
         res.write(req.url + ' 404 NOT FOUND');
         res.end(); //end the response
