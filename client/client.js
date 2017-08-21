@@ -91,16 +91,16 @@ if (!isMobile.any()) {
     });
 }
 
-// setInterval(function() {
-//     fetch("http://192.168.1.130:8181/result").then(function(response) {
-//         return response;
-//     }).then(function(obj) {
-//         console.log(obj);
-//         document.querySelector("#dist").textContent = "Distance avant l'obstacle le plus proche : " + obj.response;
-//     }).catch(function(error) {
-//         console.log(error);
-//     });
-// }, 100);
+setInterval(function() {
+    fetch("http://192.168.1.130:8181/result").then(function(response) {
+        return response.text();
+    }).then(function(obj) {
+        console.log(obj);
+        document.querySelector("#dist").textContent = "Distance avant l'obstacle le plus proche : " + obj + "cm";
+    }).catch(function(error) {
+        console.log(error);
+    });
+}, 100);
 
 function doFetch(url) {
     fetch(url).then(function(response) {
