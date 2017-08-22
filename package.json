@@ -18,6 +18,7 @@
   "homepage": "https://github.com/sorlinV/aimbot-web#readme",
   "dependencies": {
     "express": "^4.15.4",
-    "johnny-five": "^0.11.3"
+    "johnny-five": "^0.11.3",
+    "socket.io": "^2.0.3"
   }
 }
