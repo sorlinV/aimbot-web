@@ -7,6 +7,9 @@ class bot {
     constructor(max_speed_l, max_speed_r) {
         this.max_speed_l, this.max_speed_l;
         this.max_speed_r, this.max_speed_r;
+        this.vsonar = 0;
+        this.l_eyes = 0;
+        this.r_eyes = 0;
     }
 
     forward() {
@@ -50,18 +53,46 @@ class bot {
             });
         });
     }
+
+    sonar() {
+        var proximity = new five.Proximity({
+            freq: 1000,
+            controller: "HCSR04",
+            pin: 10
+        });
+        let self = this;
+        proximity.on("data", function() {
+            self.vsonar = this.cm;
+        });
+    }
+
+    reflect() {
+        let eyes = new five.IR.Reflect.Array({
+            emitter: 13,
+            pins: ["A3", "A2"], // any number of pins
+            freq: 100,
+            autoCalibrate: true,
+        });
+        let self = this;
+        eyes.on('data', function() {
+            self.l_eyes = this.raw.split(',')[0];
+            self.r_eyes = this.raw.split(',')[1];
+        });
+
+        eyes.enable();
+    }
 }
 
 let board = new five.Board({ port: '/dev/ttyUSB0' });
 
-var max_speed_l = 300;
-var max_speed_r = 300;
+var max_speed_l = 480;
+var max_speed_r = 480;
 
 let l_motor = null;
 let r_motor = null;
 
 bot = new bot(max_speed_l, max_speed_r);
-
+let range = 0;
 board.on("ready", function(err) {
     if (err) {
         console.log(err);
@@ -69,9 +100,9 @@ board.on("ready", function(err) {
     }
     bot.l_motor = new five.Motor({ pins: { pwm: 6, dir: 7 } });
     bot.r_motor = new five.Motor({ pins: { pwm: 5, dir: 4 } });
+    bot.sonar();
+    bot.reflect();
 });
-let speed = 0;
-
 
 http.createServer(function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -105,8 +136,17 @@ http.createServer(function(req, res) {
             res.write(data);
             res.end();
         });
+    } else if (req.url === "/result") {
+        let result = bot.vsonar;
+        if (result > 500) {
+            result = 0;
+        }
+
+        res.write( /*result.toString() + "\n   " +*/
+            bot.l_eyes.toString() + '  :  ' + bot.r_eyes.toString());
+        res.end();
     } else {
         res.write(req.url + ' 404 NOT FOUND');
         res.end(); //end the response
     }
-}).listen(8080); //the server object listens on port 8080
+}).listen(8181); //the server object listens on port 8181
